@@ -27,8 +27,7 @@ router.post(
     userValidator.isValidUsername,
     userValidator.isUserExists,
     followValidator.isFollowExistsForAdding,
-    followValidator.isFollowingAnotherUser,
-    userValidator.isUserExists
+    followValidator.isFollowingAnotherUser
   ],
   async (req: Request, res: Response) => {
     const followerId = (req.session.userId as string) ?? '';

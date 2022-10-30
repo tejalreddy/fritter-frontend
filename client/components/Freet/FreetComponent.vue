@@ -52,6 +52,15 @@
       Posted at {{ freet.dateModified }}
       <i v-if="freet.edited">(edited)</i>
     </p>
+    <div>
+      <LikeComponent
+        v-if="$store.state.username !== null && !editing"
+        :freet="freet">
+      </LikeComponent>
+      <p>
+        Number of likes: {{ freet.numLikes }}
+      </p>
+    </div>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -65,8 +74,11 @@
 </template>
 
 <script>
+import LikeComponent from '@/components/Like/LikeComponent.vue';
+
 export default {
   name: 'FreetComponent',
+  components: {LikeComponent},
   props: {
     // Data from the stored freet
     freet: {

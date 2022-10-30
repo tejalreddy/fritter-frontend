@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     filter: null, // Username to filter shown freets by (null = show all)
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
+    likes: [], // freets the current logged in user has liked
     alerts: {} // global success/error messages encountered during submissions to non-visible forms
   },
   mutations: {
@@ -52,6 +53,16 @@ const store = new Vuex.Store({
       const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
+    },
+    async refreshLikes(state) {
+      /**
+       * Update if a user likes or dislikes a freet
+       */
+      if (state.username !== null) {
+        const url = '/api/users/session'
+        const res = await fetch(url).then(async r => r.json());
+        state.likes = res.user.likes;
+      }
     }
   },
   // Store data across page refreshes, only discard on browser close
