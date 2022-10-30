@@ -1,6 +1,7 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
+import type {Category} from '../category/model';
 
 /**
  * This file defines the properties stored in a Freet
@@ -14,6 +15,8 @@ export type Freet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  categories: [Types.ObjectId];
+  numLikes?: [Types.ObjectId];
 };
 
 export type PopulatedFreet = {
@@ -22,6 +25,8 @@ export type PopulatedFreet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  categories: [Types.ObjectId];
+  numLikes?: [Types.ObjectId];
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -52,5 +57,24 @@ const FreetSchema = new Schema<Freet>({
   }
 });
 
+// (virtual-population)
+// Auto-populate a Category.freets field
+FreetSchema.virtual('categories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'freets'
+});
+
+// (virtual-population)
+// Auto-populate a Category.numLikes field where it counts the number of likes a freet has
+FreetSchema.virtual('numLikes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'freetId',
+  count: true
+});
+
+FreetSchema.set('toObject', {virtuals: true});
+FreetSchema.set('toJSON', {virtuals: true});
 const FreetModel = model<Freet>('Freet', FreetSchema);
 export default FreetModel;

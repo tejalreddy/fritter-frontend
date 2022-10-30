@@ -33,7 +33,14 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
    */
   static async findOneByUserId(userId: Types.ObjectId | string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({_id: userId});
+    const user = await UserModel.findOne({_id: userId});
+    if (user) {
+      await user.populate('following');
+      await user.populate('followers');
+      await user.populate('likes');
+    }
+
+    return user;
   }
 
   /**
@@ -43,7 +50,14 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
    */
   static async findOneByUsername(username: string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({username: new RegExp(`^${username.trim()}$`, 'i')});
+    const user = await UserModel.findOne({username: new RegExp(`^${username.trim()}$`, 'i')});
+    if (user) {
+      await user.populate('following');
+      await user.populate('followers');
+      await user.populate('likes');
+    }
+
+    return user;
   }
 
   /**
@@ -54,10 +68,17 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
    */
   static async findOneByUsernameAndPassword(username: string, password: string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({
+    const user = await UserModel.findOne({
       username: new RegExp(`^${username.trim()}$`, 'i'),
       password
     });
+    if (user) {
+      await user.populate('following');
+      await user.populate('followers');
+      await user.populate('likes');
+    }
+
+    return user;
   }
 
   /**
@@ -77,7 +98,12 @@ class UserCollection {
       user.username = userDetails.username;
     }
 
-    await user.save();
+    if (user) {
+      await user.populate('following');
+      await user.populate('followers');
+      await user.populate('likes');
+    }
+
     return user;
   }
 
