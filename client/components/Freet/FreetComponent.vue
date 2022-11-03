@@ -34,6 +34,9 @@
         <button @click="deleteFreet">
           🗑️ Delete
         </button>
+        <AddToCategoryButton
+          :freet="freet">
+        </AddToCategoryButton>
       </div>
     </header>
     <textarea
@@ -75,10 +78,11 @@
 
 <script>
 import LikeComponent from '@/components/Like/LikeComponent.vue';
+import AddToCategoryButton from '@/components/Category/AddToCategoryButton.vue';
 
 export default {
   name: 'FreetComponent',
-  components: {LikeComponent},
+  components: {LikeComponent, AddToCategoryButton},
   props: {
     // Data from the stored freet
     freet: {

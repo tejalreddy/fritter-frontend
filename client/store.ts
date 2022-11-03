@@ -13,7 +13,9 @@ const store = new Vuex.Store({
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
     likes: [], // freets the current logged in user has liked
-    alerts: {} // global success/error messages encountered during submissions to non-visible forms
+    alerts: {}, // global success/error messages encountered during submissions to non-visible forms
+    begin_time: null,
+    categories: [] // the user's categories
   },
   mutations: {
     alert(state, payload) {
@@ -63,7 +65,26 @@ const store = new Vuex.Store({
         const res = await fetch(url).then(async r => r.json());
         state.likes = res.user.likes;
       }
+    },
+    async setBeginTime(state) {
+      /**
+       * Set the current beginning time of a user using the platform
+       */
+       if (state.username !== null) {
+        state.begin_time = Date.now();
+       }
+    },
+    async refreshCategories(state) {
+      /**
+       * Get all of a user's categories
+       */
+       if (state.username !== null) {
+        const url = '/api/categories'
+        const res = await fetch(url).then(async r => r.json());
+        state.categories = res
+       }
     }
+
   },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]

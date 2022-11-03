@@ -21,10 +21,28 @@ export default {
       const user = res.user;
       this.$store.commit('setUsername', user ? user.username : null);
       this.$store.commit('refreshLikes');
+      this.$store.commit('setBeginTime');
+      this.$store.commit('refreshCategories');
+      console.log('begin time is ' + this.$store.state.begin_time);
+      if (this.$store.state.username != null) {
+        window.addEventListener('beforeunload', () => {
+          calculateTotalTime();
+        });
+      }
     });
 
-    // Clear alerts on page refresh
     this.$store.state.alerts = {};
+  },
+  methods: {
+    calculateTotalTime() {
+      const totalTime = Date.now() - this.$store.state.begin_time
+      console.log(calculateTotalTime);
+    },
+    async request(params) {
+      /**
+       * Submit an upsert to the Insights endpoint
+       */
+    }
   }
 };
 </script>
