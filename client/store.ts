@@ -86,6 +86,11 @@ const store = new Vuex.Store({
     }
 
   },
+  getters: {
+    getUserFreets: state => {
+      return state.freets.filter(freet => freet.author === state.username);
+    }
+  },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]
 });
