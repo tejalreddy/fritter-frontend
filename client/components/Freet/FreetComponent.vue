@@ -63,6 +63,14 @@
       <p>
         Number of likes: {{ freet.numLikes }}
       </p>
+      <p
+        v-if="freet.categories.length > 0">
+        Categories: {{freet.categories.map(category => category.name).join(', ')}}
+      </p>
+      <p
+        v-if="freet.categories.length === 0">
+        Categories: No categories selected
+      </p>
     </div>
     <section class="alerts">
       <article

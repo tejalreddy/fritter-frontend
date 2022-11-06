@@ -28,6 +28,26 @@ export default {
             required: true
         }
     },
+    watch: {
+        /**
+         * Updates the options and value whenever freets are updated
+         */
+        '$store.state.freets'(val) {
+            // set options based on user's categories
+            this.options = []
+            for (let category of this.$store.state.categories) {
+                const tag = {name: category.name};
+                this.options.push(tag);
+            }
+        
+            // set values of categories already selected for a freet
+            this.value = []
+            for (let category of this.freet.categories) {
+                const tag = {name: category.name};
+                this.value.push(tag);
+            }
+        }
+    },
     created() {
         // set options based on user's categories
         for (let category of this.$store.state.categories) {
@@ -62,6 +82,7 @@ export default {
                     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
                 }
             };
+            
             this.request(params, value.name);
         },
         removeCategory(value) {
@@ -96,6 +117,9 @@ export default {
                     const res = await r.json();
                     throw new Error(res.error);
                 }
+
+                this.$store.commit('refreshCategories');
+                this.$store.commit('refreshFreets');
                 params.callback();
             } catch (e) {
                 this.$set(this.alerts, e, 'error');
