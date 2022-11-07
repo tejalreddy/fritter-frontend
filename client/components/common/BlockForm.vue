@@ -92,14 +92,13 @@ export default {
           const res = await r.json();
           throw new Error(res.error);
         }
-
         if (this.setUsername) {
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setUsername', res.user ? res.user.username : null);
           this.$store.commit('refreshLikes');
-          this.$store.commit('setBeginTime');
           this.$store.commit('refreshCategories');
+          this.$store.commit('refreshFollows');
           if (this.$store.state.username != null && options.method === 'POST') {
             this.$store.commit('setBeginTime');
           }

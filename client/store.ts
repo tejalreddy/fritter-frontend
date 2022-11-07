@@ -17,7 +17,8 @@ const store = new Vuex.Store({
     followers: [], // users who follow the user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     begin_time: null,
-    categories: [] // the user's categories
+    categories: [], // the user's categories
+    insightsData: [], // data for the insights chart
   },
   mutations: {
     alert(state, payload) {
@@ -85,7 +86,6 @@ const store = new Vuex.Store({
        */
        if (state.username !== null) {
         state.begin_time = Date.now();
-        console.log(state.begin_time);
        }
     },
     async refreshCategories(state) {
@@ -97,8 +97,15 @@ const store = new Vuex.Store({
         const res = await fetch(url).then(async r => r.json());
         state.categories = res
        }
-    }
+    },
 
+    async getInsightsData(state) {
+      if (state.username !== null) {
+        const url = '/api/insights'
+        const res = await fetch(url).then(async r => r.json());
+        state.insightsData = res;
+      }
+    }
   },
   getters: {
     getUserFreets: state => {

@@ -24,18 +24,22 @@ export default {
       this.$store.commit('setBeginTime');
       this.$store.commit('refreshCategories');
       this.$store.commit('refreshFollows');
-      if (this.$store.state.username != null) {
-        window.addEventListener('beforeunload', () => {
-          this.calculateTotalTime();
-        });
-      }
+      this.$store.commit('getInsightsData');
     });
 
     this.$store.state.alerts = {};
   },
+  mounted() {
+    window.setInterval(() => {
+      if (this.$store.state.username != null) {
+        this.calculateTotalTime();
+        this.$store.commit('setBeginTime');
+      }
+    }, 30000)
+  },
   data() {
     return {
-      alerts: {}
+      alerts: {},
     }
   },
   methods: {
@@ -50,9 +54,9 @@ export default {
                     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
                 }
       };
-      await this.request(params);
+      this.request(params);
     },
-    request(params) {
+    async request(params) {
       /**
        * Submit an upsert to the Insights endpoint
        */
@@ -65,18 +69,15 @@ export default {
       }
 
       try {
-        const success = navigator.sendBeacon('/api/insights', options);
-        console.log(success);
-          // const r = fetch('/api/insights', options);
-          // if (!r.ok) {
-          //     const res = r.json();
-          //     throw new Error(res.error);
-          // }
-          // const res = r.json();
-          // console.log(res);
+          const r = await fetch('/api/insights', options);
+          if (!r.ok) {
+              const res = await r.json();
+              throw new Error(res.error);
+          }
+          const res = await r.json();
+          params.callback();
       } catch (e) {
           this.$set(this.alerts, e, 'error');
-          console.log(this.alerts);
           setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
     }

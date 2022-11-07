@@ -50,7 +50,6 @@ export default {
          * Watch clickedCategory to see if button should be unpressed
          */
       	clickedCategory: function(newVal, oldVal) {
-        //   console.log('Prop changed: ', newVal, ' | was: ', oldVal)
           if (oldVal !== null 
             && newVal !== null 
             && oldVal._id === this.category._id 

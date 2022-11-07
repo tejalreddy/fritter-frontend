@@ -17,52 +17,21 @@ class InsightsCollection {
      */
     static async upsertOne(userId: Types.ObjectId | string, totalTime: number): Promise<Array<HydratedDocument<Insights>>> {
         const currentTime = new Date();
-        const startOfDay = new Date(currentTime.getUTCFullYear(), currentTime.getUTCMonth(), currentTime.getUTCDate());
 
         const insightLog = await InsightsModel.find({userId, date: currentTime.toLocaleString().split(',')[0]}).sort({_id: -1}).limit(1);
         const logsUpserted = [];
 
-        // If the time the user entered and left the page is on the same day
-        if (totalTime <= currentTime.getTime() - startOfDay.getTime()) {
-            // if there is already a log for the day
-            if (insightLog.length > 0) {
-                const recentLog = insightLog[0];
-                recentLog.totalTime += totalTime;
-                await recentLog.save();
-                logsUpserted.push(recentLog);
-            // if there is not already a log for the day then create a new log
-            } else {
-                const insights = new InsightsModel({userId, date: currentTime.toLocaleString().split(',')[0], totalTime});
-                await insights.save();
-                logsUpserted.push(insights);
-            }
-        // the user entered and left the page on different days
+        if (insightLog.length > 0) {
+            const recentLog = insightLog[0];
+            recentLog.totalTime += totalTime;
+            await recentLog.save();
+            logsUpserted.push(recentLog);
         } else {
-            const newTotalTime = currentTime.getTime() - startOfDay.getTime();
-            const previousTotalTime = totalTime - newTotalTime;
-            const previousDate = new Date();
-            previousDate.setDate(currentTime.getDate() - 1);
-
-            // log entry for previous day
-            const previousInsightLog = await InsightsModel.find({userId, date: previousDate.toLocaleString().split(',')[0]}).sort({_id: -1}).limit(1);
-            if (previousInsightLog.length > 0) {
-                const recentLog = insightLog[0];
-                recentLog.totalTime += previousTotalTime;
-                await recentLog.save();
-                logsUpserted.push(recentLog);
-            // if there is not already a log for the day then create a new log
-            } else {
-                const insights = new InsightsModel({userId, date: previousDate.toLocaleString().split(',')[0], totalTime: previousTotalTime});
-                await insights.save();
-                logsUpserted.push(insights);
-            }
-
-            // log the new day (a new entry will be made)
-            const newInsights = new InsightsModel({userId, date: currentTime.toLocaleString().split(',')[0], totalTime: newTotalTime});
-            await newInsights.save();
-            logsUpserted.push(newInsights);
+            const insights = new InsightsModel({userId, date: currentTime.toLocaleString().split(',')[0], totalTime});
+            await insights.save();
+            logsUpserted.push(insights);
         }
-
+        
         return logsUpserted;
     }
 

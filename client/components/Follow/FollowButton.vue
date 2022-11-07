@@ -43,7 +43,6 @@ export default {
                     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
                 }
             };
-            console.log(params);
             this.request(params);
 
         },

@@ -19,10 +19,11 @@ const router = express.Router();
  */
 router.put(
     '/',
-    [userValidator.isUserLoggedIn],
+    [userValidator.isUserLoggedIn,
+    insightsValidator.isValidTimeFormat],
     async (req: Request, res: Response) => {
         const userId = (req.session.userId as string) ?? '';
-        const totalTime = parseInt(req.body.totalTime, 10);
+        const totalTime = parseInt(req.body.totalTime);
         const upsertedLogs = await InsightsCollection.upsertOne(userId, totalTime);
         const response = upsertedLogs.map(util.constructInsightsResponse);
         res.status(200).json(response);
@@ -67,8 +68,8 @@ router.get(
     insightsValidator.isDateExist],
     async (req: Request, res: Response) => {
         const userId = (req.session.userId as string) ?? '';
-        const [year, month, day] = req.params.date.split('-');
-        const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
+        const [month, day, year] = req.params.date.split('-');
+        const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
         const insights = await InsightsCollection.findByDate(userId, date);
         res.status(200).json({
             message: `Insights retrieved successfully for ${req.params.date}`,

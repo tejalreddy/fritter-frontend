@@ -52,9 +52,6 @@ export default {
         }
     },
     methods: {
-        filterCategory() {
-            console.log(this.clickedCategory);
-        },
         getCategoryFreets(val) {
             const params = {
                     method: 'GET',
@@ -67,7 +64,6 @@ export default {
             this.request(params, val.name);
         },
         async request(params, categoryName) {
-            console.log(categoryName);
             /**
              * Submit a request to the category endpoint
              */
@@ -86,7 +82,6 @@ export default {
                 }
                 const res = await r.json();
                 this.categoryFreets = res;
-                console.log(res);
                 params.callback();
             } catch (e) {
                 this.$set(this.alerts, e, 'error');
