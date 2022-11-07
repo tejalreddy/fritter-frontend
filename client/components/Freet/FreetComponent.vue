@@ -6,9 +6,14 @@
     class="freet"
   >
     <header>
-      <h3 class="author">
-        @{{ freet.author }}
-      </h3>
+      <div>
+        <h3 class="author">
+          @{{ freet.author }}
+        </h3>
+        <FollowButton
+        v-if="$store.state.username"
+        :followedUsername="freet.author"></FollowButton>
+      </div>
       <div
         v-if="$store.state.username === freet.author"
         class="actions"
@@ -87,10 +92,11 @@
 <script>
 import LikeComponent from '@/components/Like/LikeComponent.vue';
 import AddToCategoryButton from '@/components/Category/AddToCategoryButton.vue';
+import FollowButton from '@/components/Follow/FollowButton.vue';
 
 export default {
   name: 'FreetComponent',
-  components: {LikeComponent, AddToCategoryButton},
+  components: {LikeComponent, AddToCategoryButton, FollowButton},
   props: {
     // Data from the stored freet
     freet: {

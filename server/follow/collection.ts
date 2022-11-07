@@ -13,8 +13,8 @@ class FollowCollection {
  * @param {string} followerId - The ID of the user who is being followed
  * @return {Promise<HydratedDocument<User>>} - The added follow
  */
-  static async addOne(followerId: Types.ObjectId | string, followedId: Types.ObjectId | string): Promise<HydratedDocument<Follow>> {
-    const follow = new FollowModel({followerId, followedId});
+  static async addOne(followerId: Types.ObjectId | string, followerName: string, followedId: Types.ObjectId | string, followedName: string): Promise<HydratedDocument<Follow>> {
+    const follow = new FollowModel({followerId, followerName, followedId, followedName});
     await follow.save(); // Saves follow to MongoDB
     return follow;
   }

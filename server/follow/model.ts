@@ -9,7 +9,9 @@ import {Schema, model} from 'mongoose';
 export type Follow = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   followerId: Types.ObjectId;
+  followerName: string;
   followedId: Types.ObjectId;
+  followedName: string;
 };
 
 // Mongoose schema defintion
@@ -20,13 +22,20 @@ const FollowSchema = new Schema<Follow>({
     required: true,
     ref: 'User'
   },
-
+  followerName: {
+    type: String,
+    required: true,
+  },
   // The followerId
   followedId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'User'
-  }
+  },
+  followedName: {
+    type: String,
+    required: true,
+  },
 });
 
 const FollowModel = model<Follow>('Follow', FollowSchema);

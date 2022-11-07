@@ -13,6 +13,8 @@ const store = new Vuex.Store({
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
     likes: [], // freets the current logged in user has liked
+    following: [], // users the user is following
+    followers: [], // users who follow the user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     begin_time: null,
     categories: [] // the user's categories
@@ -66,12 +68,24 @@ const store = new Vuex.Store({
         state.likes = res.user.likes;
       }
     },
+    async refreshFollows(state) {
+      /**
+       * Update if a user likes or dislikes a freet
+       */
+       if (state.username !== null) {
+        const url = '/api/users/session'
+        const res = await fetch(url).then(async r => r.json());
+        state.following = res.user.following;
+        state.followers = res.user.followers;
+       }
+    },
     async setBeginTime(state) {
       /**
        * Set the current beginning time of a user using the platform
        */
        if (state.username !== null) {
         state.begin_time = Date.now();
+        console.log(state.begin_time);
        }
     },
     async refreshCategories(state) {

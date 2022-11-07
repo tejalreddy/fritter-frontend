@@ -3,8 +3,6 @@ import type {Follow} from '../follow/model';
 
 type FollowResponse = {
   _id: string;
-  followerId: string;
-  followedId: string;
 };
 
 /**
@@ -23,9 +21,7 @@ const constructFollowResponse = (follow: HydratedDocument<Follow>): FollowRespon
 
   return {
     ...followCopy,
-    _id: followCopy._id.toString(),
-    followerId: followCopy.followerId.toString(),
-    followedId: followCopy.followedId.toString()
+    _id: followCopy._id.toString()
   };
 };
 

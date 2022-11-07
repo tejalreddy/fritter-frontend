@@ -62,7 +62,7 @@ UserSchema.virtual('likes', {
   foreignField: 'userId'
 });
 
-UserSchema.set('toObject', {getters: true});
-UserSchema.set('toJSON', {getters: true});
+UserSchema.set('toObject', {virtuals: true});
+UserSchema.set('toJSON', {virtuals: true});
 const UserModel = model<User>('User', UserSchema);
 export default UserModel;

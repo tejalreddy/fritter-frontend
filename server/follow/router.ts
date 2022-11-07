@@ -32,7 +32,8 @@ router.post(
   async (req: Request, res: Response) => {
     const followerId = (req.session.userId as string) ?? '';
     const followedId = await UserCollection.findOneByUsername(req.body.username);
-    const follow = await FollowCollection.addOne(followerId, followedId._id);
+    const follower = await UserCollection.findOneByUserId(followerId);
+    const follow = await FollowCollection.addOne(followerId, follower.username, followedId._id, followedId.username);
     res.status(201).json({
       message: `Your follow of ${req.body.username as string} was executed successfully.`,
       follow: util.constructFollowResponse(follow)

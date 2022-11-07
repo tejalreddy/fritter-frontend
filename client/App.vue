@@ -23,25 +23,62 @@ export default {
       this.$store.commit('refreshLikes');
       this.$store.commit('setBeginTime');
       this.$store.commit('refreshCategories');
-      console.log('begin time is ' + this.$store.state.begin_time);
+      this.$store.commit('refreshFollows');
       if (this.$store.state.username != null) {
         window.addEventListener('beforeunload', () => {
-          calculateTotalTime();
+          this.calculateTotalTime();
         });
       }
     });
 
     this.$store.state.alerts = {};
   },
+  data() {
+    return {
+      alerts: {}
+    }
+  },
   methods: {
-    calculateTotalTime() {
+    async calculateTotalTime() {
       const totalTime = Date.now() - this.$store.state.begin_time
-      console.log(calculateTotalTime);
+      const params = {
+                method: 'PUT',
+                message: 'Successfully added time!',
+                body: JSON.stringify({totalTime: totalTime}),
+                callback: () => {
+                    this.$set(this.alerts, params.message, 'success');
+                    setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+                }
+      };
+      await this.request(params);
     },
-    async request(params) {
+    request(params) {
       /**
        * Submit an upsert to the Insights endpoint
        */
+      const options = {
+        method: params.method, headers: {'Content-Type': 'application/json'}
+      };
+
+      if (params.body) {
+          options.body = params.body;
+      }
+
+      try {
+        const success = navigator.sendBeacon('/api/insights', options);
+        console.log(success);
+          // const r = fetch('/api/insights', options);
+          // if (!r.ok) {
+          //     const res = r.json();
+          //     throw new Error(res.error);
+          // }
+          // const res = r.json();
+          // console.log(res);
+      } catch (e) {
+          this.$set(this.alerts, e, 'error');
+          console.log(this.alerts);
+          setTimeout(() => this.$delete(this.alerts, e), 3000);
+      }
     }
   }
 };
