@@ -6,40 +6,41 @@
     class="freet"
   >
     <header>
-      <div>
+      <section class="freet-user-info">
         <h3 class="author">
           @{{ freet.author }}
         </h3>
-        <FollowButton
+        <FollowButton class="follow-button"
         v-if="$store.state.username"
         :followedUsername="freet.author"></FollowButton>
-      </div>
+      </section>
       <div
         v-if="$store.state.username === freet.author"
         class="actions"
       >
-        <button
+        <button class="button-6"
           v-if="editing"
           @click="submitEdit"
         >
           ✅ Save changes
         </button>
-        <button
+        <button class="button-6"
           v-if="editing"
           @click="stopEditing"
         >
           🚫 Discard changes
         </button>
-        <button
+        <button class="button-6"
           v-if="!editing"
           @click="startEditing"
         >
           ✏️ Edit
         </button>
-        <button @click="deleteFreet">
+        <button class="button-6"
+          @click="deleteFreet">
           🗑️ Delete
         </button>
-        <AddToCategoryButton
+        <AddToCategoryButton class="freet-category-button"
           :freet="freet">
         </AddToCategoryButton>
       </div>
@@ -60,23 +61,28 @@
       Posted at {{ freet.dateModified }}
       <i v-if="freet.edited">(edited)</i>
     </p>
-    <div>
+    <div class="freet-like-info">
       <LikeComponent
         v-if="$store.state.username !== null && !editing"
         :freet="freet">
       </LikeComponent>
-      <p>
-        Number of likes: {{ freet.numLikes }}
+      <p class="freet-like-text"
+        v-if="freet.numLikes !== 1">
+        {{ freet.numLikes }} likes
       </p>
-      <p
-        v-if="freet.categories.length > 0">
-        Categories: {{freet.categories.map(category => category.name).join(', ')}}
-      </p>
-      <p
-        v-if="freet.categories.length === 0">
-        Categories: No categories selected
+      <p class="freet-like-text"
+        v-if="freet.numLikes === 1">
+        {{ freet.numLikes }} like
       </p>
     </div>
+      <p class="freet-categories"
+        v-if="freet.categories.length > 0 && $store.state.username !== freet.author">
+        Categories: {{freet.categories.map(category => category.name).join(', ')}}
+      </p>
+      <p class="freet-categories"
+        v-if="freet.categories.length === 0 && $store.state.username !== freet.author">
+        Categories: No categories selected
+      </p>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -199,7 +205,56 @@ export default {
 <style scoped>
 .freet {
     border: 1px solid #111;
+    border-radius: .30rem;
+    background-color: rgba(116, 165, 127, .1);
+    fill-opacity: 10;
     padding: 20px;
     position: relative;
 }
+
+.freet-user-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.follow-button {
+  margin-top: .7em;
+  margin-left: 1em;
+}
+
+.freet-category-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.freet-categories {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 16px;
+}
+
+.content {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  padding: 15px;
+}
+
+.info {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  font-size: 16px;
+}
+
+.freet-like-info {
+  display: flex;
+}
+
+.freet-like-text {
+  margin-left: .8em;
+  margin-top: .7em;
+}
+
 </style>

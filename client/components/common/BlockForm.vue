@@ -99,6 +99,7 @@ export default {
           this.$store.commit('refreshLikes');
           this.$store.commit('refreshCategories');
           this.$store.commit('refreshFollows');
+          this.$store.commit('getInsightsData');
           if (this.$store.state.username != null && options.method === 'POST') {
             this.$store.commit('setBeginTime');
           }

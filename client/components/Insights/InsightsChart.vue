@@ -43,6 +43,7 @@
         }
     },
     mounted() {
+        this.$store.commit('refreshFollows');
         this.insightsChartData.data.labels = this.$store.state.insightsData.map(log => log.date);
         this.insightsChartData.data.datasets[0].data = this.$store.state.insightsData.map(log => Math.floor(log.totalTime / 60000))
         const ctx = document.getElementById('insights-chart');

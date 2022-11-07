@@ -1,6 +1,5 @@
 <template>
     <div>
-        <label class="typo__label">Tagging</label>
         <multiselect 
             v-model="value" 
             label="name" 
@@ -8,7 +7,6 @@
             :options="options" 
             :multiple="true" 
             :hideSelected="true" 
-            :taggable="true" 
             @select="addCategory" 
             @remove="removeCategory">
         </multiselect>

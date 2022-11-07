@@ -1,11 +1,11 @@
 <template>
     <div class="like">
-        <button 
+        <button class="button-6"
             v-if="$store.state.likes.map(like => like.freetId).indexOf(freet._id) < 0"
             @click="likeFreet">
             👍 Like
         </button>
-        <button 
+        <button class="button-6"
             v-else
             @click="unlikeFreet">
             👎 Unlike
