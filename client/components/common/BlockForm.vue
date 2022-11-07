@@ -30,7 +30,7 @@
     <article v-else>
       <p>{{ content }}</p>
     </article>
-    <button
+    <button class="button-6"
       type="submit"
     >
       {{ title }}
@@ -124,6 +124,8 @@ export default {
 <style scoped>
 form {
   border: 1px solid #111;
+  border-radius: .30rem;
+  background-color: rgba(116, 165, 127, .1);
   padding: 0.5rem;
   display: flex;
   flex-direction: column;

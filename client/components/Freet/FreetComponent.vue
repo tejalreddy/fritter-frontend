@@ -210,6 +210,7 @@ export default {
     fill-opacity: 10;
     padding: 20px;
     position: relative;
+    margin:10px;
 }
 
 .freet-user-info {

@@ -8,7 +8,7 @@
       type="text"
       :placeholder="placeholder"
     >
-    <button
+    <button class="button-6"
       type="submit"
     >
       {{ button }}
