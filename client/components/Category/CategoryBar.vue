@@ -9,6 +9,7 @@
             {{category.name}}
         </p>
         <button
+            v-if="!editName"
             @click="deleteCategory(category.name)" 
             class="button-6 deleteButton">X
         </button>
@@ -20,11 +21,11 @@
         </button>
         <textarea
             v-if="editName"
-            class="content"
+            class="content bar-content"
             :value="draft"
             @input="draft = $event.target.value"
         />
-        <button 
+        <button class="button-6 category-edit-button"
             v-if="editName"
             @click="doneEditingName">
             Done
@@ -96,8 +97,9 @@ export default {
                     message: 'Successfully edited category name!',
                     body: JSON.stringify({name: this.draft}),
                     callback: () => {
-                        this.$set(this.alerts, params.message, 'success');
-                        setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+                        this.$store.commit('alert', {
+                            message: 'Successfully edited category name!', status: 'success'
+                        });
                     }
                 };
                 this.request(params, `/api/categories/${this.category.name}`);
@@ -109,8 +111,9 @@ export default {
                 message: 'Successfully deleted category!',
                 body: JSON.stringify({name: this.draft}),
                 callback: () => {
-                    this.$set(this.alerts, params.message, 'success');
-                    setTimeout(() => this.$delete(this.alerts, params.message), 3000);
+                    this.$store.commit('alert', {
+                            message: 'Successfully deleted category!', status: 'success'
+                    });
                 }
             };
             this.request(params, `/api/categories/${categoryName}`);
@@ -137,8 +140,9 @@ export default {
                 this.$store.commit('refreshFreets');
                 params.callback();
             } catch (e) {
-                this.$set(this.alerts, e, 'error');
-                setTimeout(() => this.$delete(this.alerts, e), 3000);
+                this.$store.commit('alert', {
+                    message: e, status: 'error'
+                });
             }
         },
     }
@@ -166,5 +170,10 @@ export default {
 .category-edit-button {
     padding: 4px;
     font-size: 14px;
+}
+
+.bar-content {
+    width:150px;
+    height:100px;
 }
 </style>
