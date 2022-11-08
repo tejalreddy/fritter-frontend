@@ -11,9 +11,7 @@ const isValidCategoryName = async (req: Request, res: Response, next: NextFuncti
     const categoryRegex = /^\w+$/i;
     if (!categoryRegex.test(req.params.categoryName)) {
         res.status(400).json({
-        error: {
-            username: 'Category must be a nonempty alphanumeric string.'
-        }
+        error: 'Category must be a nonempty alphanumeric string.'
         });
         return;
     }
@@ -28,9 +26,7 @@ const isValidCategoryName = async (req: Request, res: Response, next: NextFuncti
     const categoryRegex = /^\w+$/i;
     if (!categoryRegex.test(req.body.name)) {
         res.status(400).json({
-        error: {
-            username: 'Category must be a nonempty alphanumeric string.'
-        }
+        error: 'Category must be a nonempty alphanumeric string.'
         });
         return;
     }
@@ -47,9 +43,7 @@ const isCategoryExistForCreation = async (req: Request, res: Response, next: Nex
 
     if (category) {
         res.status(409).json({
-            error: {
-              categoryFound: `Category ${req.body.name as string} already exists.`
-            }
+            error:`Category ${req.body.name as string} already exists.`
         });
         return;
     }
@@ -66,9 +60,7 @@ const isCategoryExist = async (req: Request, res: Response, next: NextFunction) 
 
     if (!category) {
         res.status(404).json({
-            error: {
-              categoryNotFound: `Category ${req.params.categoryName} does not exist.`
-            }
+            error: `Category ${req.params.categoryName} does not exist.`
         });
         return;
     }
@@ -86,9 +78,7 @@ const isFreetInCategoryForDeletion = async (req: Request, res: Response, next: N
     const index = category.freets.indexOf(freet._id);
     if (index <= -1) {
         res.status(404).json({
-            error: {
-              freetNotFound: `Freet with ID ${freet._id as unknown as string} not found in category.`
-            }
+            error: `Freet with ID ${freet._id as unknown as string} not found in category.`
         });
     }
 
@@ -105,9 +95,7 @@ const isFreetInCategoryForAddition = async (req: Request, res: Response, next: N
     const index = category.freets.indexOf(freet._id);
     if (index > -1) {
         res.status(409).json({
-            error: {
-              freetFound: `Freet with ID ${freet._id as unknown as string} already in category.`
-            }
+            error: `Freet with ID ${freet._id as unknown as string} already in category.`
         });
         return;
     }

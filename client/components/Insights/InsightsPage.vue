@@ -1,12 +1,12 @@
 <template>
     <main>
     <div>
-        <h2
+        <h2 class="insights-header"
         v-if="minutes !== 1"
-        >You have been on fritter for {{ minutes }} minutes today</h2>
-        <h2
+        >You have been on Fritter for {{ minutes }} minutes today.</h2>
+        <h2 class="insights-header"
         v-else
-        >You have been on fritter for {{ minutes }} minute today</h2>
+        >You have been on Fritter for {{ minutes }} minute today.</h2>
     </div>
     <InsightsChart/>
     </main>
@@ -69,3 +69,11 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.insights-header {
+    display: flex;
+    justify-content: center;
+}
+
+</style>

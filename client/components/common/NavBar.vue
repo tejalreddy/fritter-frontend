@@ -11,7 +11,9 @@
       </h1>
     </div>
     <div class="right">
-      <router-link to="/">
+      <router-link 
+        v-if="$store.state.username"
+        to="/">
         Home
       </router-link>
       <router-link
