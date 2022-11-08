@@ -146,10 +146,9 @@ textarea {
     background-color: rgb(45, 135, 87);
 }
 
-/* CSS from https://getcssscan.com/css-buttons-examples*/
+/* CSS from https://getcssscan.com/css-buttons-examples */
 .button-6 {
   align-items: center;
-  background-color: rrgba(228, 197, 175, .1);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: .25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
@@ -163,7 +162,7 @@ textarea {
   justify-content: center;
   line-height: 1.25;
   margin: 0;
-  min-height: 3rem;
+  min-height: .6rem;
   padding: calc(.875rem - 1px) calc(1.5rem - 1px);
   position: relative;
   text-decoration: none;

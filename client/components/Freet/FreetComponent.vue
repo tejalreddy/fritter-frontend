@@ -220,7 +220,7 @@ export default {
 
 .follow-button {
   margin-top: .7em;
-  margin-left: 1em;
+  margin-left: .4em;
 }
 
 .freet-category-button {

@@ -1,12 +1,12 @@
 <template>
     <div
         v-if="followedUsername !== $store.state.username">
-        <button class="button-6"
+        <button class="button-6 follow-button"
             v-if="$store.state.following.map(follow => follow.followedName).indexOf(followedUsername) < 0"
             @click="followUser">
              Follow
         </button>
-        <button class="button-6"
+        <button class="button-6 follow-button"
             v-else
             @click="unfollowUser">
             Unfollow
@@ -91,3 +91,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+.follow-button {
+    padding:6px;
+}
+
+</style>

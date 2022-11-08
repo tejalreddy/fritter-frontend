@@ -19,8 +19,8 @@
                     datasets: [{
                         label: "Insights Data",
                         data: [],
-                        backgroundColor: "rgba(54,73,93,.5)",
-                        borderColor: "#36495d",
+                        backgroundColor: "rgba(116, 165, 127, .5)",
+                        borderColor: "#74A57F",
                         borderWidth: 3
                     }]
                 },

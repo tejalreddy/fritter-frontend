@@ -1,24 +1,27 @@
 <template>
     <article>
-    <button class="addCategoryButton"
+    <button class="button-6 addCategoryButton"
     v-if="!adding"
     @click="startAdding">
     Add a Category
     </button>
-    <div v-else-if="adding">
+    <div class="category-adding"
+    v-else-if="adding">
     <textarea
         class="content"
         :value="draft"
         @input="draft = $event.target.value"
     />
-    <button class="addCategoryButton"
-        @click="cancelAdding">
-        Cancel
-    </button>
-    <button class="addCategoryButton"
-        @click="stopAdding">
-        Done
-    </button>
+    <section class="category-button-section">
+        <button class="button-6 addCategoryButton-left"
+            @click="cancelAdding">
+            Cancel
+        </button>
+        <button class="button-6 addCategoryButton-right"
+            @click="stopAdding">
+            Done
+        </button>
+    </section>
     </div>
     </article>
 </template>
@@ -107,8 +110,38 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .addCategoryButton {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    padding:8px;
 }
+
+.addCategoryButton-left {
+    padding:5px;
+    font-size: 15px;
+    margin-right: 3px;
+    height:40px;
+}
+
+.addCategoryButton-right {
+    padding:5px;
+    font-size: 15px;
+    height:40px;
+}
+
+.content {
+    height: 70px;
+}
+
+.category-adding {
+    display: flex;
+    margin:0px;
+    padding:0px;
+}
+
+.category-button-section {
+    margin-left: 5px;
+    display: flex;
+    margin-top: 13px;
+}
+
 </style>

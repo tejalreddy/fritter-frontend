@@ -2,19 +2,20 @@
 <article>
     <div 
         class="categoryBox"
-        :style="{backgroundColor: clicked ? 'green' : 'white'}">
+        :style="{backgroundColor: clicked ? 'rgba(158, 206, 154, 1)' : 'white'}">
         <p
             v-if="!editName" 
             @click="filterByCategory">
             {{category.name}}
         </p>
-        <button 
+        <button
             @click="deleteCategory(category.name)" 
-            class="deleteButton">X
+            class="button-6 deleteButton">X
         </button>
-        <button 
+        <button
             v-if="!editName"
-            @click="editCategoryName">
+            @click="editCategoryName"
+            class="button-6 category-edit-button">
             Edit name
         </button>
         <textarea
@@ -143,10 +144,10 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .categoryBox {
     border-style:dashed; 
-    border-color:green; 
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin: .5em;
     padding: .5em;
@@ -158,5 +159,12 @@ export default {
     position: absolute;
     top: 0;
     right: 0;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.category-edit-button {
+    padding: 4px;
+    font-size: 14px;
 }
 </style>
