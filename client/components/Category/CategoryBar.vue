@@ -82,6 +82,12 @@ export default {
             /**
              * Start editing a category name
              */
+             if (this.clicked) {
+                this.$store.commit('alert', {
+                    message: 'Error: cannot edit category name while filtering on it.', status: 'error'
+                });
+                return;
+            }
             this.editName = true;
             this.draft = this.category.name;
         },
@@ -109,6 +115,12 @@ export default {
             }
         },
         deleteCategory(categoryName) {
+            if (this.clicked) {
+                this.$store.commit('alert', {
+                    message: 'Error: cannot delete category while filtering on it.', status: 'error'
+                });
+                return;
+            }
             const params = {
                 method: 'DELETE',
                 message: 'Successfully deleted category!',

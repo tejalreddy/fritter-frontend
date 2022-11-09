@@ -124,7 +124,7 @@ router.delete(
     }
   );
 
-  /**
+/**
  * Delete freet from a category
  *
  * @name DELETE /api/categories/:categoryName?/freets
