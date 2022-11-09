@@ -3,17 +3,25 @@
 
 <template>
   <main>
-    <section>
+    <section v-if="newAccount">
       <header>
         <h2>New to Fritter?</h2>
       </header>
       <RegisterForm />
+      <u 
+        @click="switchMode">
+          Have an account?
+      </u>
     </section>
-    <section>
+    <section v-if="!newAccount">
       <header>
         <h2>Have an account?</h2>
       </header>
       <LoginForm />
+      <u 
+        @click="switchMode">
+          New to Fritter?
+      </u>
     </section>
   </main>
 </template>
@@ -27,6 +35,16 @@ export default {
   components: {
     RegisterForm,
     LoginForm
+  },
+  data() {
+    return {
+      newAccount: false
+    }
+  },
+  methods: {
+    switchMode() {
+      this.newAccount = !this.newAccount;
+    }
   }
 };
 </script>

@@ -4,6 +4,7 @@
             v-model="value" 
             label="name" 
             track-by="name" 
+            placeholder="Add Categories"
             :options="options" 
             :multiple="true" 
             :hideSelected="true" 

@@ -11,7 +11,7 @@ const isValidCategoryName = async (req: Request, res: Response, next: NextFuncti
     const categoryRegex = /^\w+$/i;
     if (!categoryRegex.test(req.params.categoryName)) {
         res.status(400).json({
-        error: 'Category must be a nonempty alphanumeric string.'
+        error: 'Category must be a string only consisting of letters and numbers.'
         });
         return;
     }
@@ -26,7 +26,7 @@ const isValidCategoryName = async (req: Request, res: Response, next: NextFuncti
     const categoryRegex = /^\w+$/i;
     if (!categoryRegex.test(req.body.name)) {
         res.status(400).json({
-        error: 'Category must be a nonempty alphanumeric string.'
+        error: 'Category must be a string only consisting of letters and numbers.'
         });
         return;
     }
