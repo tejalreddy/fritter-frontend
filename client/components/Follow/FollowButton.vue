@@ -1,5 +1,5 @@
 <template>
-    <div
+    <section
         v-if="followedUsername !== $store.state.username">
         <button class="button-6 follow-button"
             v-if="$store.state.following.map(follow => follow.followedName).indexOf(followedUsername) < 0"
@@ -11,7 +11,7 @@
             @click="unfollowUser">
             Unfollow
         </button>
-    </div>
+    </section>
 </template>
 
 <script>

@@ -1,8 +1,6 @@
 <template>
-    <div>
-      <canvas id="insights-chart"></canvas>
-    </div>
-  </template>
+    <canvas id="insights-chart"></canvas>
+</template>
   
   <script>
   import Chart from 'chart.js'

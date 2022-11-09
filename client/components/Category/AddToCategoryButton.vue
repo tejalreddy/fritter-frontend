@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <section>
         <multiselect 
             v-model="value" 
             label="name" 
@@ -11,7 +11,7 @@
             @select="addCategory" 
             @remove="removeCategory">
         </multiselect>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -97,6 +97,7 @@ export default {
                     setTimeout(() => this.$delete(this.alerts, params.message), 3000);
                 }
             };
+
             this.request(params, value.name);
         },
         async request(params, categoryName) {
@@ -116,7 +117,7 @@ export default {
                     const res = await r.json();
                     throw new Error(res.error);
                 }
-
+ 
                 this.$store.commit('refreshCategories');
                 this.$store.commit('refreshFreets');
                 params.callback();

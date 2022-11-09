@@ -1,14 +1,14 @@
 <template>
     <main>
-    <div>
-        <h2 class="insights-header"
-        v-if="minutes !== 1"
-        >You have been on Fritter for {{ minutes }} minutes today.</h2>
-        <h2 class="insights-header"
-        v-else
-        >You have been on Fritter for {{ minutes }} minute today.</h2>
-    </div>
-    <InsightsChart/>
+        <header>
+            <h2 class="insights-header"
+            v-if="minutes !== 1"
+            >You have been on Fritter for {{ minutes }} minutes today.</h2>
+            <h2 class="insights-header"
+            v-else
+            >You have been on Fritter for {{ minutes }} minute today.</h2>
+        </header>
+        <InsightsChart/>
     </main>
 </template>
 

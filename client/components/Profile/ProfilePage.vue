@@ -8,7 +8,7 @@
             </section>
         </header>
 
-        <div class="profile-allCategories">
+        <article class="profile-allCategories">
             <AddCategoryForm class="profile-addCategoryButton">
             </AddCategoryForm>
             <section class="alerts">
@@ -29,12 +29,12 @@
             >
             </CategoryBar>
             
-        </div>
-        <div>
+        </article>
+        <article>
             <ProfileFeed
                 :clickedCategory="clickedCategory">
             </ProfileFeed>
-        </div>
+        </article>
     </main>
 </template>
 
