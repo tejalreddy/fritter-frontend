@@ -16,7 +16,7 @@ class InsightsCollection {
      * @returns {Promise<Array<HydratedDocument<Insights>>>} all of the logs upserted
      */
     static async upsertOne(userId: Types.ObjectId | string, totalTime: number): Promise<Array<HydratedDocument<Insights>>> {
-        const currentTime = new Date();
+        let currentTime = new Date();
 
         const insightLog = await InsightsModel.find({userId, date: currentTime.toLocaleString().split(',')[0]}).sort({_id: -1}).limit(1);
         const logsUpserted = [];
