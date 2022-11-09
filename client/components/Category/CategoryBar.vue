@@ -27,7 +27,7 @@
         />
         <button class="button-6 category-edit-button"
             v-if="editName"
-            @click="doneEditingName">
+            @click="doneEditingName(category.name)">
             Done
         </button>
     </div>
@@ -72,6 +72,7 @@ export default {
     methods: {
         filterByCategory() {
             this.clicked = !this.clicked
+            console.log(this.clicked);
             if (this.clicked) {
                 this.$emit('filterCategory', this.category);
             } else {
@@ -85,13 +86,15 @@ export default {
             this.editName = true;
             this.draft = this.category.name;
         },
-        doneEditingName() {
+        doneEditingName(categoryName) {
             /**
              * Submit an edit to a category name
              */
             
+            console.log('category name ');
+            console.log(categoryName);
             this.editName = false;
-            if (this.draft !== this.category.name) {
+            if (this.draft !== categoryName) {
                 const params = {
                     method: 'PUT',
                     message: 'Successfully edited category name!',
@@ -102,7 +105,7 @@ export default {
                         });
                     }
                 };
-                this.request(params, `/api/categories/${this.category.name}`);
+                this.request(params, `/api/categories/${categoryName}`);
             } else {
                 this.$store.commit('alert', {
                     message: 'Error: Category name should be different than previous name.', status: 'error'
@@ -132,7 +135,9 @@ export default {
             if (params.body) {
                 options.body = params.body;
             }
-
+            
+            console.log(options);
+            console.log(url);
             try {
                 const r = await fetch(url, options);
                 if (!r.ok) {

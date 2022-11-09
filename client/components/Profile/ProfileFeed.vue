@@ -54,6 +54,14 @@ export default {
                 });
                 this.categoryFreets = freetBelongings;
             }
+        },
+
+        /**
+         * Updates the options and value whenever freets are updated
+         */
+        '$store.state.freets'(val) {
+            // set options based on user's categories
+            this.$store.commit('refreshFreets');
         }
     },
     data() {

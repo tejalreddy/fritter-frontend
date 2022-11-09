@@ -44,7 +44,7 @@ class CategoryCollection {
      * @returns the updated category
      */
     static async updateName(categoryName: string, newName: string, userId: Types.ObjectId | string): Promise<HydratedDocument<Category>> {
-        const category = await CategoryModel.findOne({categoryName, userId});
+        const category = await CategoryModel.findOne({name: categoryName, userId});
         category.name = newName;
         await category.save();
         return category;
@@ -80,7 +80,7 @@ class CategoryCollection {
      * @returns the freets in a specific category
      */
     static async findFreetsInCategory(categoryName: string, userId: Types.ObjectId | string): Promise<Array<HydratedDocument<Freet>>> {
-        const category = await CategoryModel.findOne({categoryName, userId});
+        const category = await CategoryModel.findOne({name: categoryName, userId});
         const freets = Promise.all(category.freets.map(async freetId => FreetCollection.findOne(freetId)));
         return freets;
     }
