@@ -1,5 +1,5 @@
 <template>
-<article>
+<section>
     <div 
         class="categoryBox"
         :style="{backgroundColor: clicked ? 'rgba(158, 206, 154, 1)' : 'white'}">
@@ -31,7 +31,7 @@
             Done
         </button>
     </div>
-</article>
+</section>
 </template>
 
 <script>
@@ -103,6 +103,10 @@ export default {
                     }
                 };
                 this.request(params, `/api/categories/${this.category.name}`);
+            } else {
+                this.$store.commit('alert', {
+                    message: 'Error: Category name should be different than previous name.', status: 'error'
+                });
             }
         },
         deleteCategory(categoryName) {

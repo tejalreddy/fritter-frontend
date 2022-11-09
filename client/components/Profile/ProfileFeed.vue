@@ -1,18 +1,29 @@
 <template>
-    <article>
-        <FreetComponent
-                v-if="!clickedCategory"
-                v-for="freet in $store.getters.getUserFreets"
+    <section>
+        <article
+            v-if="$store.getters.getUserFreets.length > 0">
+            <FreetComponent
+                    v-if="!clickedCategory"
+                    v-for="freet in $store.getters.getUserFreets"
+                    :key="freet.id"
+                    :freet="freet"
+                />
+            <FreetComponent
+                v-if="clickedCategory"
+                v-for="freet in categoryFreets"
                 :key="freet.id"
                 :freet="freet"
             />
-        <FreetComponent
-            v-if="clickedCategory"
-            v-for="freet in categoryFreets"
-            :key="freet.id"
-            :freet="freet"
-        />
-    </article>
+            <h3 
+                v-if="categoryFreets.length === 0
+                && clickedCategory">
+                You have no freets in this category.
+            </h3>
+        </article>
+        <h3 v-else>
+            You have not posted any freets.
+        </h3>
+    </section>
 </template>
 
 <script>
