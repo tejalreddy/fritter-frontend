@@ -72,7 +72,6 @@ export default {
     methods: {
         filterByCategory() {
             this.clicked = !this.clicked
-            console.log(this.clicked);
             if (this.clicked) {
                 this.$emit('filterCategory', this.category);
             } else {
@@ -90,9 +89,6 @@ export default {
             /**
              * Submit an edit to a category name
              */
-            
-            console.log('category name ');
-            console.log(categoryName);
             this.editName = false;
             if (this.draft !== categoryName) {
                 const params = {
@@ -136,8 +132,6 @@ export default {
                 options.body = params.body;
             }
             
-            console.log(options);
-            console.log(url);
             try {
                 const r = await fetch(url, options);
                 if (!r.ok) {

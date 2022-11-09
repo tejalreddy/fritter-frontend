@@ -59,7 +59,7 @@ export default {
         /**
          * Updates the options and value whenever freets are updated
          */
-        '$store.state.freets'(val) {
+        '$store.state.categories'(val) {
             // set options based on user's categories
             this.$store.commit('refreshFreets');
         }
